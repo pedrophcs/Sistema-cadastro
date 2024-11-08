@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="pesquisa-container">
+        <h2>Pesquisar Usuários</h2>
+        <form method="POST" action="{{ url_for('pesquisa') }}">
+            <input type="text" name="query" placeholder="Digite o termo de pesquisa" value="{{ termo_pesquisa }}">
+            <button type="submit">Pesquisar</button>
+        </form>
+        
+        {% if resultados %}
+            <div id="resultadosPesquisa">
+                <h3>Resultados da Pesquisa</h3>
+                <ul>
+                    {% for resultado in resultados %}
+                        <li>
+                            Nome: {{ resultado['nome'] }} - CPF/CNPJ: {{ resultado['cpf_cnpj'] }}<br>
+                            Telefone: {{ resultado['telefone'] }} - Email: {{ resultado['email'] }}<br>
+                            Cidade: {{ resultado['cidade'] }} - Bairro: {{ resultado['bairro'] }} - UF: {{ resultado['uf'] }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            <p>Nenhum resultado encontrado.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
