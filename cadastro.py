@@ -3,18 +3,15 @@ import bcrypt
 import mysql.connector
 from mysql.connector import Error
 
-
-
-usuario = 'exemploLogado'
-senha = '1234'
-senha_hash = bcrypt.hashpw(senha.encode(), bcrypt.gensalt())
-
+'''Conexão com o usuário'''
 def verificar_login(usuario_digitado, senha_digitada):
-    """Função que verifica se o login é válido."""
+    usuario = 'exemploLogado'
+    senha = '1234'
+    senha_hash = bcrypt.hashpw(senha.encode(), bcrypt.gensalt())
+
     if usuario_digitado == usuario and bcrypt.checkpw(senha_digitada.encode(), senha_hash):
         return True
     return False
-
 
 def conectar_banco():
     try:
@@ -32,6 +29,7 @@ def conectar_banco():
         print(f"Erro ao conectar ao banco de dados: {e}")
         return None
 
+'''Validações de dados'''
 def validate_cpf(cpf):
 
     digit_cpf = cpf.replace(".", "").replace("-", "")
@@ -96,12 +94,15 @@ def verificacao_cpf_ou_cnpj(cpf_cnpj):
         return False
 
 def cpf_cnpj_existe(cpf_cnpj, connect):
+
     cursor = connect.cursor()
     query = "SELECT COUNT(*) FROM cadastro WHERE cpf_cnpj = %s"
     cursor.execute(query, (cpf_cnpj,))
     (count,) = cursor.fetchone()
     return count > 0
 
+
+'''Funções que coletam informações do usuário'''
 def busca_cep(cep):
     cep = cep.replace(".", "").replace("-", "")
     if len(cep) == 8:
@@ -167,6 +168,8 @@ def obter_dados_usuario():
 
     return dados_usuario
 
+
+'''Movimentação com o banco de dados'''
 def inserir_dados_no_banco_cadastro(dados_usuario):
 
 
@@ -214,7 +217,7 @@ def inserir_dados_no_banco_cadastro(dados_usuario):
         if 'connect' in locals() and connect.is_connected():
             connect.close()
             print("Conexão ao banco de dados encerrada.")
-    
+
 def inserir_dados_no_banco_endereco(cidade, bairro, uf, id_cadastro):
 
     try:

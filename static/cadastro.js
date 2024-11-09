@@ -6,7 +6,7 @@ document.getElementById("cadastroForm").addEventListener("submit", function(e) {
     const telefone = document.getElementById("telefone").value;
     const email = document.getElementById("email").value;
     const website = document.getElementById("website").value;
-    const atividade = document.getElementById("atividade").value;  // Caso haja outro campo
+    const atividade = document.getElementById("atividade").value; 
 
     // Dados que serão enviados ao servidor
     const dadosCadastro = {
@@ -29,8 +29,7 @@ document.getElementById("cadastroForm").addEventListener("submit", function(e) {
     .then(response => response.json())
     .then(data => {
         alert("Cadastro realizado com sucesso!");
-        // Você pode redirecionar para outra página ou limpar o formulário
-        // window.location.href = "/outra-pagina";  // Exemplo de redirecionamento
+        
     })
     .catch(error => {
         console.error("Erro ao realizar o cadastro:", error);
